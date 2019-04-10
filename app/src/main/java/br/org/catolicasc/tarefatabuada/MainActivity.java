@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,26 +28,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         number = findViewById(R.id.number);
-        texto = findViewById(R.id.text);
+        texto = findViewById(R.id.texto);
         Button bt = findViewById(R.id.button);
 
         bt.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                try{
+                    int numero = Integer.valueOf(number.getText().toString());
 
-                int numero = Integer.valueOf(number.getText().toString());
+                    List<Integer>tabuada = new ArrayList<>();
+                    for(int i = 1; i<= 10; i++){
+                        tabuada.add(i *numero);
 
-                List<Integer>tabuada = new ArrayList<>();
-                for(int i = 1; i<= 10; i++){
-                    tabuada.add(i *numero);
+                    }
 
+                    ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(
+                            MainActivity.this,R.layout.list_item, tabuada
+                    );
+                    texto.setAdapter(arrayAdapter);
+                }catch (NumberFormatException e){
+                    Toast.makeText(MainActivity.this,
+                            "Digite um numero valido",Toast.LENGTH_LONG).show();
                 }
 
-                ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(
-                        MainActivity.this,R.layout.list_item, tabuada
-                );
-                texto.setAdapter(arrayAdapter);
+
 
 
             }
